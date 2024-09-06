@@ -15,6 +15,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <!--this install in infrastructure--> 
+    <PackageReference Include="Quartz" Version="3.4.0" />
+	  <!--this install on web app-->
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.4.0" />
   </ItemGroup>
 
 </Project>
