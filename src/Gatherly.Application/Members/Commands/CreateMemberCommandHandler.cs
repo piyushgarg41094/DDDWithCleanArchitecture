@@ -1,5 +1,8 @@
-﻿using Gatherly.Domain.Entities;
+﻿using Gatherly.Application.Abstractions.Messaging;
+using Gatherly.Domain.Entities;
+using Gatherly.Domain.Errors;
 using Gatherly.Domain.Repositories;
+using Gatherly.Domain.Shared;
 using Gatherly.Domain.ValueObjects;
 using MediatR;
 using System;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Gatherly.Application.Members.Commands
 {
-    public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand>
+    public class CreateMemberCommandHandler : ICommandHandler<CreateMemberCommand, Guid>
     {
         private readonly IMemberRepository _memberRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -21,13 +24,13 @@ namespace Gatherly.Application.Members.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
         {
             var firstNameResult = FirstName.Create(request.FirstName);
             if (firstNameResult.IsFailure)
             {
                 //Log Error
-                return Unit.Value;
+                return Result.Failure<Guid>(DomainErrors.Member.EmailAlreadyInUse);
             }
             var member = new Member(
                 Guid.NewGuid(),
@@ -39,7 +42,7 @@ namespace Gatherly.Application.Members.Commands
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return member.Id;
         }
     }
 }

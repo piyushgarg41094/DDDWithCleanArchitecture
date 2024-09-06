@@ -19,5 +19,12 @@ namespace Gatherly.Domain.Errors
                 "Gathering.AlreadyPassed",
                 "Can't send invitation for gathering in the past.");
         }
+
+        public static class Member
+        {
+            public static readonly Error EmailAlreadyInUse = new(
+            "Member.EmailAlreadyInUse",
+            "The specified email is already in use");
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Gatherly.Application.Abstractions.Messaging;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,5 @@ namespace Gatherly.Application.Members.Commands
     public record CreateMemberCommand(
         string Email,
         string FirstName,
-        string LastName) : IRequest;
+        string LastName) : ICommand<Guid>;
 }

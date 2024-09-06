@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
+	  <!--Install this package in a web api project where program.cs resides-->
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
     <PackageReference Include="MediatR" Version="10.0.1" />
   </ItemGroup>
 
